@@ -1,0 +1,78 @@
+module "networking" {
+  source                     = "./networking"
+  vpc_id                     = var.vpc_id
+  alb_sg_name                = var.alb_sg_name
+  alb_sg_description         = var.alb_sg_description
+  alb_sg_ingress_description = var.alb_sg_ingress_description
+  alb_sg_ingress_from_port   = var.alb_sg_ingress_from_port
+  alb_sg_ingress_to_port     = var.alb_sg_ingress_to_port
+  alb_sg_ingress_protocol    = var.alb_sg_ingress_protocol
+  alb_sg_ingress_cidr_blocks = var.alb_sg_ingress_cidr_blocks
+  alb_sg_egress_description  = var.alb_sg_egress_description
+  alb_sg_egress_from_port    = var.alb_sg_egress_from_port
+  alb_sg_egress_to_port      = var.alb_sg_egress_to_port
+  alb_sg_egress_protocol     = var.alb_sg_egress_protocol
+  alb_sg_egress_cidr_blocks  = var.alb_sg_egress_cidr_blocks
+  ecs_sg_name                = var.ecs_sg_name
+  ecs_sg_description         = var.ecs_sg_description
+  ecs_sg_ingress_description = var.ecs_sg_ingress_description
+  ecs_sg_ingress_from_port   = var.ecs_sg_ingress_from_port
+  ecs_sg_ingress_to_port     = var.ecs_sg_ingress_to_port
+  ecs_sg_ingress_protocol    = var.ecs_sg_ingress_protocol
+  ecs_sg_egress_description  = var.ecs_sg_egress_description
+  ecs_sg_egress_from_port    = var.ecs_sg_egress_from_port
+  ecs_sg_egress_to_port      = var.ecs_sg_egress_to_port
+  ecs_sg_egress_protocol     = var.ecs_sg_egress_protocol
+  ecs_sg_egress_cidr_blocks  = var.ecs_sg_egress_cidr_blocks
+}
+
+module "loadbalancer" {
+  source                   = "./loadbalancing"
+  lb_name                  = var.lb_name
+  is_internal              = var.is_internal
+  security_groups          = [module.networking.security_group_alb_id]
+  subnets                  = var.subnets
+  idle_timeout             = var.idle_timeout
+  environment              = var.environment
+  tg_name                  = var.tg_name
+  tg_port                  = var.tg_port
+  tg_protocol              = var.tg_protocol
+  vpc_id                   = var.vpc_id
+  tg_type                  = var.tg_type
+  tg_deregistration_delay  = var.tg_deregistration_delay
+  tg_healthy_threshold     = var.tg_healthy_threshold
+  tg_unhealthy_threshold   = var.tg_unhealthy_threshold
+  tg_health_check_interval = var.tg_health_check_interval
+  tg_health_check_path     = var.tg_health_check_path
+  tg_health_check_port     = var.tg_health_check_port
+  tg_health_check_protocol = var.tg_health_check_protocol
+  tg_health_check_timeout  = var.tg_health_check_timeout
+  listener_port            = var.listener_port
+  listener_protocol        = var.listener_protocol
+  listener_type            = var.listener_type
+}
+
+module "ecs" {
+  source                            = "./ecs"
+  depends_on                        = [module.loadbalancer]
+  cluster_name                      = var.cluster_name
+  capacity_providers                = var.capacity_providers
+  family_name                       = var.family_name
+  launch_type                       = var.launch_type
+  task_role_arn                     = var.task_role_arn
+  execution_role_arn                = var.execution_role_arn
+  task_cpu                          = var.task_cpu
+  task_memory                       = var.task_memory
+  container_name                    = var.container_name
+  container_image                   = var.container_image
+  container_cpu                     = var.container_cpu
+  container_memory                  = var.container_memory
+  container_port                    = var.container_port
+  ecs_service_name                  = var.ecs_service_name
+  sg_ecs_service                    = module.networking.security_group_ecs_id
+  desired_count                     = var.desired_count
+  deployment_min_healthy_percent    = var.deployment_min_healthy_percent
+  health_check_grace_period_seconds = var.health_check_grace_period_seconds
+  subnets                           = var.subnets
+  target_group_arn                  = module.loadbalancer.tg_arn
+}
