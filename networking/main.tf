@@ -30,11 +30,11 @@ resource "aws_security_group" "sg_ecs_service" {
   vpc_id      = var.vpc_id
 
   ingress {
-    description = var.sg_ecs_ingress_description
-    from_port   = var.sg_ecs_ingress_from_port
-    to_port     = var.sg_ecs_ingress_to_port
-    protocol    = var.sg_ecs_ingress_protocol
-    cidr_blocks = [aws_security_group.sg_loadbalancer.id]
+    description     = var.sg_ecs_ingress_description
+    from_port       = var.sg_ecs_ingress_from_port
+    to_port         = var.sg_ecs_ingress_to_port
+    protocol        = var.sg_ecs_ingress_protocol
+    security_groups = [aws_security_group.sg_loadbalancer.id]
   }
 
   egress {

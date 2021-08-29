@@ -28,6 +28,7 @@ variable "sg_alb_ingress_protocol" {
 }
 
 variable "sg_alb_ingress_cidr_blocks" {
+  type = list(string)
 }
 
 variable "sg_alb_egress_description" {
