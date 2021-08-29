@@ -1,29 +1,29 @@
 module "networking" {
   source                     = "./networking"
   vpc_id                     = var.vpc_id
-  alb_sg_name                = var.alb_sg_name
-  alb_sg_description         = var.alb_sg_description
-  alb_sg_ingress_description = var.alb_sg_ingress_description
-  alb_sg_ingress_from_port   = var.alb_sg_ingress_from_port
-  alb_sg_ingress_to_port     = var.alb_sg_ingress_to_port
-  alb_sg_ingress_protocol    = var.alb_sg_ingress_protocol
-  alb_sg_ingress_cidr_blocks = var.alb_sg_ingress_cidr_blocks
-  alb_sg_egress_description  = var.alb_sg_egress_description
-  alb_sg_egress_from_port    = var.alb_sg_egress_from_port
-  alb_sg_egress_to_port      = var.alb_sg_egress_to_port
-  alb_sg_egress_protocol     = var.alb_sg_egress_protocol
-  alb_sg_egress_cidr_blocks  = var.alb_sg_egress_cidr_blocks
-  ecs_sg_name                = var.ecs_sg_name
-  ecs_sg_description         = var.ecs_sg_description
-  ecs_sg_ingress_description = var.ecs_sg_ingress_description
-  ecs_sg_ingress_from_port   = var.ecs_sg_ingress_from_port
-  ecs_sg_ingress_to_port     = var.ecs_sg_ingress_to_port
-  ecs_sg_ingress_protocol    = var.ecs_sg_ingress_protocol
-  ecs_sg_egress_description  = var.ecs_sg_egress_description
-  ecs_sg_egress_from_port    = var.ecs_sg_egress_from_port
-  ecs_sg_egress_to_port      = var.ecs_sg_egress_to_port
-  ecs_sg_egress_protocol     = var.ecs_sg_egress_protocol
-  ecs_sg_egress_cidr_blocks  = var.ecs_sg_egress_cidr_blocks
+  sg_alb_name                = var.sg_alb_name
+  sg_alb_description         = var.sg_alb_description
+  sg_alb_ingress_description = var.sg_alb_ingress_description
+  sg_alb_ingress_from_port   = var.sg_alb_ingress_from_port
+  sg_alb_ingress_to_port     = var.sg_alb_ingress_to_port
+  sg_alb_ingress_protocol    = var.sg_alb_ingress_protocol
+  sg_alb_ingress_cidr_blocks = var.sg_alb_ingress_cidr_blocks
+  sg_alb_egress_description  = var.sg_alb_egress_description
+  sg_alb_egress_from_port    = var.sg_alb_egress_from_port
+  sg_alb_egress_to_port      = var.sg_alb_egress_to_port
+  sg_alb_egress_protocol     = var.sg_alb_egress_protocol
+  sg_alb_egress_cidr_blocks  = var.sg_alb_egress_cidr_blocks
+  sg_ecs_name                = var.sg_ecs_name
+  sg_ecs_description         = var.sg_ecs_description
+  sg_ecs_ingress_description = var.sg_ecs_ingress_description
+  sg_ecs_ingress_from_port   = var.sg_ecs_ingress_from_port
+  sg_ecs_ingress_to_port     = var.sg_ecs_ingress_to_port
+  sg_ecs_ingress_protocol    = var.sg_ecs_ingress_protocol
+  sg_ecs_egress_description  = var.sg_ecs_egress_description
+  sg_ecs_egress_from_port    = var.sg_ecs_egress_from_port
+  sg_ecs_egress_to_port      = var.sg_ecs_egress_to_port
+  sg_ecs_egress_protocol     = var.sg_ecs_egress_protocol
+  sg_ecs_egress_cidr_blocks  = var.sg_ecs_egress_cidr_blocks
 }
 
 module "loadbalancer" {

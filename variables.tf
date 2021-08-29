@@ -239,10 +239,6 @@ variable "health_check_grace_period_seconds" {
   type = number
 }
 
-variable "dynamodb_arn" {
-  type = string
-}
-
 variable "task_role_arn" {
   type = string
 }
