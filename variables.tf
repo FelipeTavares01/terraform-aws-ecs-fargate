@@ -1,29 +1,9 @@
-variable "cluster_name" {
-  type = string
-}
-
-variable "capacity_providers" {
-  type = list(string)
-}
-
 variable "aws_region" {
   type = string
 }
 
-variable "lb_name" {
-  type = string
-}
-
-variable "is_internal" {
-  type = bool
-}
-
 variable "subnets" {
   type = list(string)
-}
-
-variable "idle_timeout" {
-  type = number
 }
 
 variable "environment" {
@@ -90,7 +70,6 @@ variable "sg_ecs_description" {
   type = string
 }
 
-
 variable "sg_ecs_ingress_description" {
   type = string
 }
@@ -125,6 +104,18 @@ variable "sg_ecs_egress_protocol" {
 
 variable "sg_ecs_egress_cidr_blocks" {
   type = list(string)
+}
+
+variable "alb_name" {
+  type = string
+}
+
+variable "alb_is_internal" {
+  type = bool
+}
+
+variable "alb_idle_timeout" {
+  type = number
 }
 
 variable "tg_name" {
@@ -175,51 +166,91 @@ variable "tg_health_check_timeout" {
   type = number
 }
 
-variable "listener_port" {
+variable "alb_listener_port" {
   type = number
 }
 
-variable "listener_protocol" {
+variable "alb_listener_protocol" {
   type = string
 }
 
-variable "listener_type" {
+variable "alb_listener_type" {
   type = string
 }
 
-variable "family_name" {
-  type = string
-}
-
-variable "launch_type" {
-  type = string
-}
-
-variable "task_cpu" {
+variable "asg_max_size" {
   type = number
 }
 
-variable "task_memory" {
+variable "asg_min_size" {
   type = number
 }
 
-variable "container_name" {
+variable "asg_scale_in_cooldown_cpu" {
+  type = number
+}
+
+variable "asg_scale_out_cooldown_cpu" {
+  type = number
+}
+
+variable "asg_target_cpu_value" {
+  type = number
+}
+
+variable "asg_scale_in_cooldown_memory" {
+  type = number
+}
+
+variable "asg_scale_out_cooldown_memory" {
+  type = number
+}
+
+variable "asg_target_memory_value" {
+  type = number
+}
+
+variable "ecs_cluster_name" {
   type = string
 }
 
-variable "container_image" {
+variable "ecs_capacity_providers" {
+  type = list(string)
+}
+
+variable "ecs_family_name" {
   type = string
 }
 
-variable "container_cpu" {
+variable "ecs_launch_type" {
+  type = string
+}
+
+variable "ecs_task_cpu" {
   type = number
 }
 
-variable "container_memory" {
+variable "ecs_task_memory" {
   type = number
 }
 
-variable "container_port" {
+variable "ecs_container_name" {
+  type = string
+}
+
+variable "ecs_container_image" {
+  type = string
+}
+
+variable "ecs_container_cpu" {
+  type = number
+}
+
+variable "ecs_container_memory" {
+  type = number
+}
+
+variable "ecs_container_port" {
   type = number
 }
 
@@ -227,22 +258,22 @@ variable "ecs_service_name" {
   type = string
 }
 
-variable "desired_count" {
+variable "ecs_desired_count" {
   type = number
 }
 
-variable "deployment_min_healthy_percent" {
+variable "ecs_deployment_min_healthy_percent" {
   type = number
 }
 
-variable "health_check_grace_period_seconds" {
+variable "ecs_health_check_grace_period_seconds" {
   type = number
 }
 
-variable "task_role_arn" {
+variable "ecs_task_role_arn" {
   type = string
 }
 
-variable "execution_role_arn" {
+variable "ecs_execution_role_arn" {
   type = string
 }

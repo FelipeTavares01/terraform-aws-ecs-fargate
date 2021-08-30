@@ -1,8 +1,8 @@
-variable "lb_name" {
+variable "alb_name" {
   type = string
 }
 
-variable "is_internal" {
+variable "alb_is_internal" {
   type = bool
 }
 
@@ -14,7 +14,7 @@ variable "subnets" {
   type = list(string)
 }
 
-variable "idle_timeout" {
+variable "alb_idle_timeout" {
   type = number
 }
 
@@ -74,14 +74,14 @@ variable "tg_health_check_timeout" {
   type = number
 }
 
-variable "listener_port" {
+variable "alb_listener_port" {
   type = number
 }
 
-variable "listener_protocol" {
+variable "alb_listener_protocol" {
   type = string
 }
 
-variable "listener_type" {
+variable "alb_listener_type" {
   type = string
 }

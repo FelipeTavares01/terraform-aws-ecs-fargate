@@ -28,11 +28,11 @@ module "networking" {
 
 module "loadbalancer" {
   source                   = "./loadbalancing"
-  lb_name                  = var.lb_name
-  is_internal              = var.is_internal
+  alb_name                 = var.alb_name
+  alb_is_internal          = var.alb_is_internal
   security_groups          = [module.networking.security_group_alb_id]
   subnets                  = var.subnets
-  idle_timeout             = var.idle_timeout
+  alb_idle_timeout         = var.alb_idle_timeout
   environment              = var.environment
   tg_name                  = var.tg_name
   tg_port                  = var.tg_port
@@ -47,32 +47,47 @@ module "loadbalancer" {
   tg_health_check_port     = var.tg_health_check_port
   tg_health_check_protocol = var.tg_health_check_protocol
   tg_health_check_timeout  = var.tg_health_check_timeout
-  listener_port            = var.listener_port
-  listener_protocol        = var.listener_protocol
-  listener_type            = var.listener_type
+  alb_listener_port        = var.alb_listener_port
+  alb_listener_protocol    = var.alb_listener_protocol
+  alb_listener_type        = var.alb_listener_type
+}
+
+module "asg" {
+  source                        = "./asg"
+  asg_max_size                  = var.asg_max_size
+  asg_min_size                  = var.asg_min_size
+  ecs_cluster_name              = var.ecs_cluster_name
+  ecs_service_name              = var.ecs_service_name
+  asg_policy_name               = var.ecs_service_name
+  asg_target_cpu_value          = var.asg_target_cpu_value
+  asg_scale_in_cooldown_cpu     = var.asg_scale_in_cooldown_cpu
+  asg_scale_out_cooldown_cpu    = var.asg_scale_out_cooldown_cpu
+  asg_target_memory_value       = var.asg_target_memory_value
+  asg_scale_in_cooldown_memory  = var.asg_scale_in_cooldown_memory
+  asg_scale_out_cooldown_memory = var.asg_scale_out_cooldown_memory
 }
 
 module "ecs" {
-  source                            = "./ecs"
-  depends_on                        = [module.loadbalancer]
-  cluster_name                      = var.cluster_name
-  capacity_providers                = var.capacity_providers
-  family_name                       = var.family_name
-  launch_type                       = var.launch_type
-  task_role_arn                     = var.task_role_arn
-  execution_role_arn                = var.execution_role_arn
-  task_cpu                          = var.task_cpu
-  task_memory                       = var.task_memory
-  container_name                    = var.container_name
-  container_image                   = var.container_image
-  container_cpu                     = var.container_cpu
-  container_memory                  = var.container_memory
-  container_port                    = var.container_port
-  ecs_service_name                  = var.ecs_service_name
-  sg_ecs_service                    = module.networking.security_group_ecs_id
-  desired_count                     = var.desired_count
-  deployment_min_healthy_percent    = var.deployment_min_healthy_percent
-  health_check_grace_period_seconds = var.health_check_grace_period_seconds
-  subnets                           = var.subnets
-  target_group_arn                  = module.loadbalancer.tg_arn
+  source                                = "./ecs"
+  depends_on                            = [module.loadbalancer]
+  ecs_cluster_name                      = var.ecs_cluster_name
+  ecs_capacity_providers                = var.ecs_capacity_providers
+  ecs_family_name                       = var.ecs_family_name
+  ecs_launch_type                       = var.ecs_launch_type
+  ecs_task_role_arn                     = var.ecs_task_role_arn
+  ecs_execution_role_arn                = var.ecs_execution_role_arn
+  ecs_task_cpu                          = var.ecs_task_cpu
+  ecs_task_memory                       = var.ecs_task_memory
+  ecs_container_name                    = var.ecs_container_name
+  ecs_container_image                   = var.ecs_container_image
+  ecs_container_cpu                     = var.ecs_container_cpu
+  ecs_container_memory                  = var.ecs_container_memory
+  ecs_container_port                    = var.ecs_container_port
+  ecs_service_name                      = var.ecs_service_name
+  sg_ecs_service                        = module.networking.security_group_ecs_id
+  ecs_desired_count                     = var.ecs_desired_count
+  ecs_deployment_min_healthy_percent    = var.ecs_deployment_min_healthy_percent
+  ecs_health_check_grace_period_seconds = var.ecs_health_check_grace_period_seconds
+  subnets                               = var.subnets
+  target_group_arn                      = module.loadbalancer.tg_arn
 }

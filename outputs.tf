@@ -1,5 +1,5 @@
 output "cluster_name" {
-  value = var.cluster_name
+  value = var.ecs_cluster_name
 }
 
 output "alb_dns_name" {
