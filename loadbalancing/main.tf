@@ -1,10 +1,10 @@
-resource "aws_lb" "loadbalancer" {
-  name                       = var.lb_name
-  internal                   = var.is_internal
+resource "aws_lb" "application_loadbalancer" {
+  name                       = var.alb_name
+  internal                   = var.alb_is_internal
   load_balancer_type         = "application"
   security_groups            = var.security_groups
   subnets                    = var.subnets
-  idle_timeout               = var.idle_timeout
+  idle_timeout               = var.alb_idle_timeout
   enable_deletion_protection = false
 
   tags = {
@@ -41,12 +41,12 @@ resource "aws_lb_target_group" "tg_alb" {
 }
 
 resource "aws_lb_listener" "listener_alb" {
-  load_balancer_arn = aws_lb.loadbalancer.arn
-  port              = var.listener_port
-  protocol          = var.listener_protocol
+  load_balancer_arn = aws_lb.application_loadbalancer.arn
+  port              = var.alb_listener_port
+  protocol          = var.alb_listener_protocol
 
   default_action {
-    type             = var.listener_type
+    type             = var.alb_listener_type
     target_group_arn = aws_lb_target_group.tg_alb.arn
   }
 }

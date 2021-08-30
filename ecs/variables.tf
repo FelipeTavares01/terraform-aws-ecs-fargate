@@ -1,52 +1,52 @@
-variable "cluster_name" {
+variable "ecs_cluster_name" {
   type = string
 }
 
-variable "capacity_providers" {
+variable "ecs_capacity_providers" {
   type = list(string)
 }
 
-variable "family_name" {
+variable "ecs_family_name" {
   type = string
 }
 
-variable "launch_type" {
+variable "ecs_launch_type" {
   type = string
 }
 
-variable "task_role_arn" {
+variable "ecs_task_role_arn" {
   type = string
 }
 
-variable "execution_role_arn" {
+variable "ecs_execution_role_arn" {
   type = string
 }
 
-variable "task_cpu" {
+variable "ecs_task_cpu" {
   type = number
 }
 
-variable "task_memory" {
+variable "ecs_task_memory" {
   type = number
 }
 
-variable "container_name" {
+variable "ecs_container_name" {
   type = string
 }
 
-variable "container_image" {
+variable "ecs_container_image" {
   type = string
 }
 
-variable "container_cpu" {
+variable "ecs_container_cpu" {
   type = number
 }
 
-variable "container_memory" {
+variable "ecs_container_memory" {
   type = number
 }
 
-variable "container_port" {
+variable "ecs_container_port" {
   type = number
 }
 
@@ -58,15 +58,15 @@ variable "sg_ecs_service" {
   type = string
 }
 
-variable "desired_count" {
+variable "ecs_desired_count" {
   type = number
 }
 
-variable "deployment_min_healthy_percent" {
+variable "ecs_deployment_min_healthy_percent" {
   type = number
 }
 
-variable "health_check_grace_period_seconds" {
+variable "ecs_health_check_grace_period_seconds" {
   type = number
 }
 
